@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mail Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            text-align: center;
+        }
+        #container {
+            max-width: 600px;
+            margin: auto;
+        }
+        textarea, input, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #emailOutput {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            min-height: 150px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>AI Mail Generator</h1>
+        <input type="text" id="emailTitle" placeholder="Enter email title">
+        <button onclick="generateEmail()">Generate Email</button>
+        <div id="emailOutput"></div>
+    </div>
+
+    <script>
+        async function generateEmail() {
+            const title = document.getElementById("emailTitle").value;
+            if (!title.trim()) {
+                alert("Please enter an email title!");
+                return;
+            }
+
+            document.getElementById("emailOutput").innerHTML = "Generating email...";
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title: title })
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    document.getElementById("emailOutput").innerHTML = `<span style="color: red;">Error: ${data.error}</span>`;
+                } else {
+                    document.getElementById("emailOutput").innerText = data.email;
+                }
+            } catch (error) {
+                document.getElementById("emailOutput").innerHTML = `<span style="color: red;">Failed to generate email.</span>`;
+            }
+        }
+    </script>
+
+</body>
+</html>
