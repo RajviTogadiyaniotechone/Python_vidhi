@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mail Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            resize: none;
+        }
+        .history-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center text-primary">🚀 AI Mail Generator</h2>
+
+    <div class="input-group mb-3">
+        <input type="text" id="title" class="form-control" placeholder="Enter email topic...">
+        <button class="btn btn-primary" onclick="generateEmail()">Generate Email</button>
+    </div>
+
+    <h4 class="mt-4">Generated Email:</h4>
+    <textarea id="generatedEmail" class="form-control" readonly></textarea>
+
+    <div class="text-center mt-3">
+        <button class="btn btn-success" onclick="copyText()">Copy Email</button>
+        <button class="btn btn-secondary" onclick="showHistory()">Show History</button>
+    </div>
+
+    <div id="historySection" class="mt-4 d-none">
+        <h4>Email History</h4>
+        <div id="historyBox" class="history-box"></div>
+    </div>
+</div>
+
+<script>
+    function generateEmail() {
+        let title = document.getElementById("title").value.trim();
+        if (!title) {
+            alert("Please enter a topic.");
+            return;
+        }
+
+        fetch('/generate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({title: title})
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("generatedEmail").value = data.email;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function copyText() {
+        let textarea = document.getElementById("generatedEmail");
+        textarea.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard!");
+    }
+
+    function showHistory() {
+        fetch('/history')
+        .then(response => response.json())
+        .then(data => {
+            let historyBox = document.getElementById("historyBox");
+            historyBox.innerHTML = "";
+            data.history.forEach(item => {
+                historyBox.innerHTML += `<p><strong>${item.title}</strong><br>${item.email}</p><hr>`;
+            });
+            document.getElementById("historySection").classList.remove("d-none");
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mail Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f4f4f4;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Mail Generator</h1>
+    <input type="text" id="title" placeholder="Enter email title">
+    <button onclick="generateEmail()">Generate Email</button>
+    <h3>Generated Email:</h3>
+    <textarea id="emailOutput" readonly></textarea>
+    
+    <h3>Email History</h3>
+    <button onclick="fetchHistory()">Show History</button>
+    <ul id="historyList"></ul>
+    
+    <script>
+        function generateEmail() {
+            const title = document.getElementById('title').value.trim();
+            if (!title) {
+                alert("Please enter a title!");
+                return;
+            }
+            fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('emailOutput').value = data.email;
+            });
+        }
+        
+        function fetchHistory() {
+            fetch('/history')
+            .then(response => response.json())
+            .then(data => {
+                const historyList = document.getElementById('historyList');
+                historyList.innerHTML = '';
+                data.history.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${item.title}</strong><br>${item.email.replace(/\n/g, '<br>')}`;
+                    historyList.appendChild(li);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
