@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-0"># FaceRec</h1>
+            <h2 class="text-muted">{{ folder_name }}</h2>
+            <p class="text-muted">{{ images|length }} image{% if images|length != 1 %}s{% endif %}</p>
+        </div>
+        <a href="{{ url_for('gallery') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Back to Gallery
+        </a>
+    </div>
+
+    {% if images %}
+    <div class="row">
+        {% for image in images %}
+        <div class="col-6 col-md-4 col-lg-3 mb-4">
+            <div class="card border-0">
+                <img src="{{ image.path }}" class="card-img-top rounded" alt="{{ image.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body text-center p-2">
+                    <small class="text-muted">{{ image.name }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>No images found in this folder.
+        </div>
+        <a href="{{ url_for('gallery') }}" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left me-2"></i>Return to Gallery
+        </a>
+    </div>
+    {% endif %}
+
+    <footer class="mt-5 py-4 text-center">
+        <p class="text-muted mb-0">Face Recognition App © 2023</p>
+    </footer>
+</div>
+
+<style>
+    h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+    }
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+    .card {
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: scale(1.03);
+    }
+</style>
+{% endblock %}

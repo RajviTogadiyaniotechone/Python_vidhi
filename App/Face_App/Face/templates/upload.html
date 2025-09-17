@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-body p-5">
+                <h2 class="card-title text-center mb-4">Upload Images</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="images" class="form-label">Select Images</label>
+                        <input class="form-control form-control-lg" type="file" id="images" name="images" multiple accept="image/*" required>
+                        <div class="form-text">Select multiple images containing faces to categorize.</div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-upload me-2"></i>Upload and Process
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

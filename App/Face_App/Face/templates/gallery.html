@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4">
+    <h2 class="text-center">Categorized Faces Gallery</h2>
+    <p class="text-center text-muted">Click on any person to view their images</p>
+</div>
+
+{% if folders %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for folder in folders %}
+    <div class="col">
+        <a href="{{ url_for('view_folder', folder_name=folder.name) }}" class="text-decoration-none">
+            <div class="card h-100">
+                <img src="{{ folder.thumbnail }}" class="card-img-top" alt="{{ folder.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-1">{{ folder.name }}</h5>
+                    <small class="text-muted">{{ folder.count }} image{% if folder.count > 1 %}s{% endif %}</small>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state text-center">
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle-fill me-2"></i>No categorized faces yet.
+    </div>
+    <a href="{{ url_for('upload') }}" class="btn btn-primary">
+        <i class="bi bi-upload me-2"></i>Upload Images
+    </a>
+</div>
+{% endif %}
+{% endblock %}
