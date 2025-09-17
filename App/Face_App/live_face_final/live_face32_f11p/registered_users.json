@@ -1,0 +1,98 @@
+[
+    {
+        "fullName": "Parth Lodhiya",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1746192595/sbihppacctuopva4agyn.jpg",
+        "_id": "67f75a5368ffc6a87866e460",
+        "fileName": "67f75a5368ffc6a87866e460-Parth-Lodhiya",
+        "userRole": "Super Admin",
+        "createdAt": "2025-04-10T05:42:43.511Z"
+    },
+    {
+        "fullName": "Divyesh Patel",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1746188747/tkdbn0h64q4glkofs6t8.png",
+        "_id": "680a31c231f8aaec5b70fe87",
+        "fileName": "680a31c231f8aaec5b70fe87-Divyesh-Patel",
+        "userRole": "CEO",
+        "createdAt": "2025-04-10T06:42:25.962Z"
+    },
+    {
+        "fullName": "Vinay Ladva",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1746190430/kbk9tdtujzapapjzlq75.jpg",
+        "_id": "6814c06183525e11e53a8d5b",
+        "fileName": "6814c06183525e11e53a8d5b-Vinay-Ladva",
+        "userRole": "Employee",
+        "createdAt": "2025-01-02T12:53:53.818Z"
+    },
+    {
+        "fullName": "Rajvi Togadiya",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1746190565/ubsfoyeys3qa9j9xkcpm.jpg",
+        "_id": "6814c0e783525e11e53a8d65",
+        "fileName": "6814c0e783525e11e53a8d65-Rajvi-Togadiya",
+        "userRole": "Employee",
+        "createdAt": "2025-05-02T12:56:07.925Z"
+    },
+    {
+        "fullName": "Hardik Hansora",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1746190629/cysx7qfizjdaod58axm9.png",
+        "_id": "6814c19083525e11e53a8d72",
+        "fileName": "6814c19083525e11e53a8d72-Hardik-Hansora",
+        "userRole": "Employee",
+        "createdAt": "2025-05-02T12:58:56.675Z"
+    },
+    {
+        "fullName": "Payal Ramani",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1746190943/sk5mtll29k59khzn4rf6.jpg",
+        "_id": "6814c24e83525e11e53a8d82",
+        "fileName": "6814c24e83525e11e53a8d82-Payal-Ramani",
+        "userRole": "Employee",
+        "createdAt": "2025-05-02T13:02:07.001Z"
+    },
+    {
+        "fullName": "Nutan Ladva",
+        "userImg": null,
+        "_id": "6819a1202a77484bb3cd1fcf",
+        "fileName": "6819a1202a77484bb3cd1fcf-Nutan-Ladva",
+        "userRole": "Employee",
+        "createdAt": "2025-05-06T05:41:52.250Z"
+    },
+    {
+        "fullName": "User",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1746713810/y2rasaf9a7meuzop8hui.png",
+        "_id": "681cb9bda76e75e607c4d4d4",
+        "fileName": "681cb9bda76e75e607c4d4d4-User",
+        "userRole": "Employee",
+        "createdAt": "2025-05-08T14:03:41.354Z"
+    },
+    {
+        "fullName": "Vidhi Vagehla",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1747289927/fe8ed55yksga9g0ilhwa.jpg",
+        "_id": "6824709555faeee6472ef8a1",
+        "fileName": "6824709555faeee6472ef8a1-Vidhi-Vagehla",
+        "userRole": "Employee",
+        "createdAt": "2025-05-14T10:29:41.173Z"
+    },
+    {
+        "fullName": "Tahir Modi",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1747292930/ghh0npn7a5onuz30kcdy.jpg",
+        "_id": "682593027d01a4a3ca5b294b",
+        "fileName": "682593027d01a4a3ca5b294b-Tahir-Modi",
+        "userRole": "Employee",
+        "createdAt": "2025-05-15T07:08:50.286Z"
+    },
+    {
+        "fullName": "unknown",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1747301044/n7pb3iscreldpaeusvxh.jpg",
+        "_id": "6825b2b55875929e0abefa7e",
+        "fileName": "6825b2b55875929e0abefa7e-unknown",
+        "userRole": "unknown",
+        "createdAt": "2025-05-15T09:24:05.470Z"
+    },
+    {
+        "fullName": "unknown",
+        "userImg": "https://res.cloudinary.com/dg7iukpez/image/upload/v1747302518/e0vmz9jaxtsocvmr2wzw.jpg",
+        "_id": "6825b877d334e6db459e2675",
+        "fileName": "6825b877d334e6db459e2675-unknown",
+        "userRole": "unknown",
+        "createdAt": "2025-05-15T09:48:39.032Z"
+    }
+]

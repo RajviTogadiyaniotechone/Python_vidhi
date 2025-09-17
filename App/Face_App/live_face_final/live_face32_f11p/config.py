@@ -1,0 +1,13 @@
+# config.py
+
+# Detection zone size in pixels (square area)
+ZONE_SIZE = 450 # Change this to 300, 500, etc.
+
+# Recognition threshold for ArcFace (cosine similarity)
+RECOGNITION_THRESHOLD = 0.45
+
+# Camera settings
+CAMERA_WIDTH = 1280
+CAMERA_HEIGHT = 720
+FPS = 10
+IMAGE_BASE_URL = "https://ai-camera-detection.vercel.app/api/user/getRegisteredUsers"
