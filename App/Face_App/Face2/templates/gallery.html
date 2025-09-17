@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Categorized Faces Gallery</h2>
+        <div>
+            <a href="{{ url_for('register') }}" class="btn btn-outline-primary me-2">
+                <i class="bi bi-person-plus-fill me-2"></i> Register
+            </a>
+            <a href="{{ url_for('upload') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i> Add Images
+            </a>
+        </div>
+    </div>
+
+    {% if folders %}
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for folder in folders %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ folder.thumbnail }}" 
+                     class="card-img-top" 
+                     alt="{{ folder.name }}"
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ folder.name }}</h5>
+                    <p class="card-text text-muted">
+                        {{ folder.count }} image{% if folder.count != 1 %}s{% endif %}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{{ url_for('view_collection', folder_type=folder.type, name=folder.name.replace("'s Profile", "")) }}" 
+                       class="btn btn-outline-primary w-100">
+                        View Collection
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle-fill me-2"></i> No categorized faces yet. Please register and upload images first.
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

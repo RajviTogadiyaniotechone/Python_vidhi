@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-4">{{ title }}</h1>
+        <a href="{{ url_for('gallery') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Gallery
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <img src="{{ url_for('static', filename=image_path.split('static/')[1]) }}" 
+                     class="card-img-top img-fluid"
+                     alt="{{ title }}"
+                     style="max-height: 80vh; object-fit: contain;">
+                <div class="card-footer text-center">
+                    <a href="{{ url_for('gallery') }}" class="btn btn-primary">
+                        Back to Gallery
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 py-3">
+        <p class="text-muted">Face Recognition App © {{ now.year }}</p>
+    </footer>
+</div>
+{% endblock %}

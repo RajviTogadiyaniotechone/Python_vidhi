@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4 text-center">Categorized Faces Gallery</h2>
+    
+    {% if folders %}
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for folder in folders %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ url_for('static', filename=folder.thumbnail) }}" 
+                     class="card-img-top" 
+                     alt="{{ folder.name }}" 
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ folder.name }}</h5>
+                    <p class="card-text text-muted">{{ folder.count }} image{% if folder.count > 1 %}s{% endif %}</p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{{ url_for('view_folder', folder_name=folder.name) }}" 
+                       class="btn btn-outline-primary w-100">
+                        View Images
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="alert alert-info">
+            No categorized faces yet. Upload some images first.
+        </div>
+        <a href="{{ url_for('upload') }}" class="btn btn-primary mt-3">
+            Upload Images
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
