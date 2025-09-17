@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mail Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .email-container {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            text-align: left;
+            font-size: 14px;
+            border-radius: 6px;
+            display: none;
+        }
+        .history-container {
+            margin-top: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .history-item {
+            background: white;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2><i class="fas fa-envelope"></i> AI Mail Generator</h2>
+        <input type="text" id="emailTitle" placeholder="Enter email title...">
+        <button onclick="generateEmail()"><i class="fas fa-paper-plane"></i> Generate Email</button>
+
+        <div id="generatedEmail" class="email-container"></div>
+        
+        <h3>Email History</h3>
+        <div id="emailHistory" class="history-container"></div>
+    </div>
+
+    <script>
+        async function generateEmail() {
+            const title = document.getElementById("emailTitle").value.trim();
+            if (!title) {
+                alert("Please enter an email title!");
+                return;
+            }
+
+            const response = await fetch("/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title })
+            });
+
+            const data = await response.json();
+            if (data.email) {
+                const emailContainer = document.getElementById("generatedEmail");
+                emailContainer.style.display = "block";
+                emailContainer.innerHTML = `<strong>Generated Email:</strong><br>${data.email}`;
+                fetchEmailHistory();
+            }
+        }
+
+        async function fetchEmailHistory() {
+            const response = await fetch("/history");
+            const data = await response.json();
+            const historyDiv = document.getElementById("emailHistory");
+            historyDiv.innerHTML = "";
+
+            data.history.reverse().forEach(item => {
+                historyDiv.innerHTML += `
+                    <div class="history-item">
+                        <strong>Title:</strong> ${item.title} <br>
+                        <strong>Email:</strong> ${item.email}
+                    </div>
+                `;
+            });
+        }
+
+        fetchEmailHistory();
+    </script>
+
+</body>
+</html>
