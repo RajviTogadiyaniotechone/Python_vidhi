@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Face Recognition</title>
+</head>
+<body>
+    <h1>Live Face Recognition</h1>
+    <div>
+        <button onclick="startRecognition()">Start Recognition</button>
+        <video id="video" width="640" height="480" autoplay></video>
+    </div>
+    
+    <script>
+        function startRecognition() {
+            const video = document.getElementById("video");
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function(err) {
+                    console.log("Error: " + err);
+                });
+        }
+    </script>
+</body>
+</html>
