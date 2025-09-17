@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper Title Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; background-color: #f4f4f4; }
+        .container { width: 50%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); }
+        input, select, button { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        .title-box { background: #f1f1f1; padding: 10px; margin: 10px 0; border-radius: 5px; cursor: pointer; }
+        .title-box:hover { background: #ddd; }
+    </style>
+    <script>
+        function regenerateTitle(selectedTitle) {
+            fetch('/regenerate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'selected_title=' + encodeURIComponent(selectedTitle)
+            })
+            .then(response => response.json())
+            .then(newTitles => {
+                let titleList = document.getElementById("generated-titles");
+                titleList.innerHTML = "";
+                newTitles.forEach(title => {
+                    let div = document.createElement("div");
+                    div.classList.add("title-box");
+                    div.innerText = title;
+                    div.onclick = () => regenerateTitle(title);
+                    titleList.appendChild(div);
+                });
+            });
+        }
+
+        function downloadTitles() {
+            let titles = [...document.querySelectorAll(".title-box")].map(el => el.innerText);
+            let form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/download";
+            titles.forEach(title => {
+                let input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "titles[]";
+                input.value = title;
+                form.appendChild(input);
+            });
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Research Paper Title Generator</h2>
+        <form action="/generate" method="post">
+            <label for="keywords">Enter Keywords:</label>
+            <input type="text" id="keywords" name="keywords" required placeholder="e.g., deep learning, medical imaging">
+            
+            <label for="category">Select Subject Area:</label>
+            <select id="category" name="category">
+                <option value="general">General</option>
+                <option value="computer_science">Computer Science</option>
+                <option value="medicine">Medicine</option>
+                <option value="engineering">Engineering</option>
+                <option value="physics">Physics</option>
+                <option value="biology">Biology</option>
+            </select>
+
+            <button type="submit">Generate Titles</button>
+        </form>
+
+        <h3>Generated Titles:</h3>
+        <div id="generated-titles">
+            {% for title in titles %}
+                <div class="title-box" onclick="regenerateTitle('{{ title }}')">{{ title }}</div>
+            {% endfor %}
+        </div>
+
+        {% if titles %}
+            <button onclick="downloadTitles()">Download Titles</button>
+        {% endif %}
+    </div>
+</body>
+</html>

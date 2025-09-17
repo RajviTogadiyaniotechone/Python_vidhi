@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Autocomplete</title>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <style>
+        body {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        input {
+            width: 60%;
+            padding: 10px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        #suggestion-box {
+            margin-top: 5px;
+            color: gray;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentence Autocomplete</h1>
+    <input type="text" id="autocomplete-input" placeholder="Start typing..." autofocus>
+    <div id="suggestion-box">Starting here...</div>
+</body>
+</html>

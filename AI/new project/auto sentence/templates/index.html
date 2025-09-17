@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Autocomplete</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .autocomplete-box {
+            position: relative;
+            width: 500px;
+        }
+        .input-wrapper {
+            position: relative;
+            display: flex;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            position: absolute;
+            background: transparent;
+            color: black;
+            z-index: 2;
+        }
+        .suggestion {
+            position: absolute;
+            padding: 15px;
+            font-size: 20px;
+            color: gray;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        let currentSuggestion = "";
+
+        async function getAutocomplete() {
+            let inputField = document.getElementById("input-text");
+            let suggestionBox = document.getElementById("suggestion-text");
+
+            let userInput = inputField.value;
+            if (userInput.trim() === "") {
+                suggestionBox.innerText = "";
+                currentSuggestion = "";
+                return;
+            }
+
+            let response = await fetch("/autocomplete", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt: userInput })
+            });
+
+            let data = await response.json();
+            let suggestion = data.completion;
+
+            if (suggestion) {
+                currentSuggestion = suggestion;
+                suggestionBox.innerText = userInput + suggestion;
+            } else {
+                currentSuggestion = "";
+                suggestionBox.innerText = "";
+            }
+        }
+
+        function acceptSuggestion(event) {
+            if (event.key === "Tab" && currentSuggestion) {
+                event.preventDefault();
+                let inputField = document.getElementById("input-text");
+                inputField.value += currentSuggestion;
+                currentSuggestion = "";
+                document.getElementById("suggestion-text").innerText = "";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Sentence Autocomplete</h1>
+        <div class="autocomplete-box">
+            <div class="input-wrapper">
+                <span class="suggestion" id="suggestion-text"></span>
+                <input type="text" id="input-text" oninput="getAutocomplete()" onkeydown="acceptSuggestion(event)" placeholder="Start typing...">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

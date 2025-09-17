@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Autocomplete</title>
+    <script>
+        async function getAutocomplete() {
+            let userInput = document.getElementById("input-text").value;
+            let response = await fetch("/autocomplete", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt: userInput })
+            });
+            let data = await response.json();
+            document.getElementById("output-text").innerText = data.completion;
+        }
+    </script>
+</head>
+<body>
+    <h1>Sentence Autocomplete</h1>
+    <input type="text" id="input-text" oninput="getAutocomplete()" placeholder="Start typing...">
+    <p id="output-text"></p>
+</body>
+</html>

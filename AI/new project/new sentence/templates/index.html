@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Autocomplete</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to top */
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            padding-top: 100px; /* Moves everything to the top */
+        }
+        .container {
+            text-align: center;
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .input-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        .autocomplete-input {
+            width: 400px;
+            font-size: 18px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            position: relative;
+            background: transparent;
+            color: black;
+            z-index: 2;
+        }
+        .autocomplete-suggestion {
+            width: 400px;
+            font-size: 18px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            position: absolute;
+            color: gray;
+            background: transparent;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Sentence Autocomplete</h2>
+    <div class="input-container">
+        <input type="text" id="textInput" class="autocomplete-input" placeholder="Starting here..." oninput="fetchSuggestion()" onkeydown="handleTab(event)">
+        <input type="text" id="suggestionText" class="autocomplete-suggestion" disabled>
+    </div>
+</div>
+
+<script>
+    let fullSuggestion = "";
+    let currentWords = [];
+    let acceptedWords = [];
+
+    function fetchSuggestion() {
+        let inputText = document.getElementById("textInput").value.trim();
+
+        if (inputText === "") {
+            document.getElementById("suggestionText").value = "";
+            acceptedWords = [];
+            return;
+        }
+
+        $.ajax({
+            url: "/autocomplete",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ prompt: inputText }),
+            success: function (response) {
+                fullSuggestion = response.completion.trim();
+                if (fullSuggestion) {
+                    currentWords = fullSuggestion.split(" ");
+                    updateSuggestion(inputText);
+                } else {
+                    document.getElementById("suggestionText").value = "";
+                }
+            }
+        });
+    }
+
+    function updateSuggestion(inputText) {
+        let inputWords = inputText.split(" ");
+        let suggestionWords = fullSuggestion.split(" ");
+
+        // Automatically track typed words
+        acceptedWords = inputWords.filter(word => suggestionWords.includes(word));
+
+        // Get the next suggestion words
+        let remainingSuggestions = suggestionWords.slice(acceptedWords.length).join(" ");
+        document.getElementById("suggestionText").value = inputText + (remainingSuggestions ? " " + remainingSuggestions : "");
+    }
+
+    function handleTab(event) {
+        if (event.key === "Tab") {
+            event.preventDefault();
+            if (currentWords.length > acceptedWords.length) {
+                let inputField = document.getElementById("textInput");
+                let inputText = inputField.value.trim();
+
+                let nextWord = currentWords[acceptedWords.length];
+                if (nextWord) {
+                    inputField.value += " " + nextWord;
+                    acceptedWords.push(nextWord);
+                    updateSuggestion(inputField.value);
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

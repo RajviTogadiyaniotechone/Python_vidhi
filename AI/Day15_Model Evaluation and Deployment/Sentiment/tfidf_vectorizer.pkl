@@ -1,0 +1,22 @@
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Sample dataset
+documents = [
+    "This is a sample news article about politics.",
+    "The sports team won the championship!",
+    "Technology advances in AI are happening rapidly.",
+    "Health benefits of exercise are well documented."
+]
+
+# Train the TF-IDF vectorizer
+vectorizer = TfidfVectorizer()
+vectorizer.fit(documents)
+
+# Save the vectorizer properly
+vectorizer_path = r"D:\I_Python\Python\AI\Day15_Model Evaluation and Deployment\Sentiment\tfidf_vectorizer.pkl"
+
+with open(vectorizer_path, "wb") as file:
+    pickle.dump(vectorizer, file)
+
+print(f"Vectorizer saved at {vectorizer_path} ✅")
